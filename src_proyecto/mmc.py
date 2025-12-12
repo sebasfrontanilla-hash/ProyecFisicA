@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
  
-# DATOS DE LAS PARTÍCULAS (De las 6 tablas proporcionadas)
+# DATOS 
 
 
 # Tabla 1: Partícula con masa 4m
