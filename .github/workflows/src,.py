@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ============================================================================
+
 # PERSONA 1: Calcular coeficientes A y B usando Mínimos Cuadrados
-# ============================================================================
+ 
 
 def calcular_coeficiente_A(x_datos, y_datos):
     """
@@ -110,9 +110,9 @@ def calcular_errores(x_datos, y_datos, A, B):
     return errores
 
 
-# ============================================================================
+ 
 # PERSONA 2: Linearizar datos de las tablas
-# ============================================================================
+
 
 def linearizar_datos_exponencial(x_datos, y_datos):
     """
@@ -177,9 +177,9 @@ def linearizar_datos_potencial(x_datos, y_datos):
     return x_linearizados, y_linearizados
 
 
-# ============================================================================
+
 # PERSONA 3: Graficar datos y ajuste
-# ============================================================================
+
 
 def graficar_ajuste_lineal(x_datos, y_datos, A, B, errores):
     """
@@ -236,9 +236,9 @@ def graficar_ajuste_lineal(x_datos, y_datos, A, B, errores):
     print(f"  - RMSE: {rmse:.6f}\n")
 
 
-# ============================================================================
+
 # EJEMPLO DE USO INTEGRADO
-# ============================================================================
+ 
 
 if __name__ == "__main__":
     print("="*70)
