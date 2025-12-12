@@ -1,38 +1,56 @@
-name: Stats
+name: CI - Tests
 
 on:
   push:
-    branches: [master]
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Run script
-        run: python ./github/stats.py
-
-      - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Update stats
-          commit_user_name: Sebas Frontanilla [GitHub Actions]
-          commit_user_email: sebasfrontanilla@gmail.com
-          commit_autor: sebas
-       
-
-
-
-
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.10', '3.11', '3.12']
+      fail-fast: false
     
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v4
+    
+    - name: Configurar Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Instalar Poetry
+      uses: snok/install-poetry@v1
+      with:
+        version: 1.8.3
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+    
+    - name: Cargar dependencias en caché
+      uses: actions/cache@v4
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          venv-${{ runner.os }}-${{ matrix.python-version }}-
+    
+    - name: Instalar dependencias
+      run: poetry install --no-interaction --no-root
+    
+    - name: Ejecutar tests con pytest
+      run: poetry run pytest tests/ -v --cov --cov-report=xml --cov-report=term
+    
+    - name: Verificar cobertura mínima
+      run: poetry run pytest tests/ --cov --cov-fail-under=80
+    
+    - name: Subir reporte de cobertura
+      if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.12'
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./coverage.xml
+        fail_ci_if_error: false
