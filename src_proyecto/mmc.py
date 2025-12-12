@@ -1,8 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-# DATOS 
+ 
+# DATOS DE LAS PARTÍCULAS (De las 6 tablas proporcionadas)
 
 
 # Tabla 1: Partícula con masa 4m
@@ -60,7 +60,7 @@ todas_las_tablas = {
 
 
 # PERSONA 1: Calcular coeficientes A y B usando Mínimos Cuadrados
-
+ 
 
 def calcular_coeficiente_A(x_datos, y_datos):
     """
@@ -160,7 +160,7 @@ def calcular_errores(x_datos, y_datos, A, B):
 
 
 # PERSONA 2: Linearizar datos (cambio de variable apropiado)
-
+ 
 
 def linearizar_posicion_tiempo(t_datos, x_datos):
     """
@@ -292,9 +292,9 @@ def analizar_tabla_completa(nombre_tabla, datos_tabla):
     x = datos_tabla['x']
     v = datos_tabla['v']
     
-    
+    # -------------------------------------------------------------------------
     # ANÁLISIS 1: Velocidad vs Tiempo (v vs t)
-     
+    # -------------------------------------------------------------------------
     print("\n--- ANÁLISIS 1: VELOCIDAD vs TIEMPO ---\n")
     print("PERSONA 1: Calculando coeficientes para v vs t")
     A_vt = calcular_coeficiente_A(t, v)
@@ -311,9 +311,9 @@ def analizar_tabla_completa(nombre_tabla, datos_tabla):
                             f'{nombre_tabla}: Velocidad vs Tiempo',
                             'Tiempo t [s]', 'Velocidad v [m/s]')
     
-    
+    # -------------------------------------------------------------------------
     # ANÁLISIS 2: Posición vs Tiempo al Cuadrado (x vs t²)
-    
+    # -------------------------------------------------------------------------
     print("\n--- ANÁLISIS 2: POSICIÓN vs TIEMPO AL CUADRADO ---\n")
     print("PERSONA 2: Linearizando datos (x vs t²)")
     t_cuadrado, x_lin = linearizar_posicion_tiempo(t, x)
@@ -350,7 +350,7 @@ def analizar_tabla_completa(nombre_tabla, datos_tabla):
 
 
 # PROGRAMA PRINCIPAL
-
+ 
 
 if __name__ == "__main__":
     print("\n" + "="*75)
